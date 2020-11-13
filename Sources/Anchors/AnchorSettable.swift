@@ -61,4 +61,84 @@ extension AnchorSettable where Self: AxisXProviding & AxisYProviding {
         pin(.top, to: v2, constant: offset)
         pin(.bottom, to: v2, constant: -offset)
     }
+
+    public func pinToSuperview(excluding axis: Axis.X, offset: CGFloat) {
+        guard let superview = superview else {
+            assertionFailure()
+            return
+        }
+
+        switch axis {
+        case .leading:
+            pin(.trailing, to: superview, constant: -offset)
+            pin(.top, to: superview, constant: offset)
+            pin(.bottom, to: superview, constant: -offset)
+        case .trailing:
+            pin(.leading, to: superview, constant: offset)
+            pin(.top, to: superview, constant: offset)
+            pin(.bottom, to: superview, constant: -offset)
+        default:
+            assertionFailure()
+        }
+    }
+
+    public func pinToSuperview(excluding axis: Axis.Y, offset: CGFloat) {
+        guard let superview = superview else {
+            assertionFailure()
+            return
+        }
+
+        switch axis {
+        case .bottom:
+            pin(.leading, to: superview, constant: offset)
+            pin(.trailing, to: superview, constant: -offset)
+            pin(.top, to: superview, constant: offset)
+        case .top:
+            pin(.leading, to: superview, constant: offset)
+            pin(.trailing, to: superview, constant: -offset)
+            pin(.bottom, to: superview, constant: -offset)
+        default:
+            assertionFailure()
+        }
+    }
+
+    public func pinToSuperview(excluding axis: Axis.X, insets: UIEdgeInsets = .zero) {
+        guard let superview = superview else {
+            assertionFailure()
+            return
+        }
+
+        switch axis {
+        case .leading:
+            pin(.trailing, to: superview, constant: insets.right)
+            pin(.top, to: superview, constant: insets.top)
+            pin(.bottom, to: superview, constant: insets.bottom)
+        case .trailing:
+            pin(.leading, to: superview, constant: insets.left)
+            pin(.top, to: superview, constant: insets.top)
+            pin(.bottom, to: superview, constant: insets.bottom)
+        default:
+            assertionFailure()
+        }
+    }
+
+    public func pinToSuperview(excluding axis: Axis.Y, insets: UIEdgeInsets = .zero) {
+        guard let superview = superview else {
+            assertionFailure()
+            return
+        }
+
+        switch axis {
+        case .bottom:
+            pin(.leading, to: superview, constant: insets.left)
+            pin(.trailing, to: superview, constant: insets.right)
+            pin(.top, to: superview, constant: insets.top)
+        case .top:
+            pin(.leading, to: superview, constant: insets.left)
+            pin(.trailing, to: superview, constant: insets.right)
+            pin(.bottom, to: superview, constant: insets.bottom)
+        default:
+            assertionFailure()
+        }
+    }
 }
